@@ -1,5 +1,5 @@
 /* eslint-disable linebreak-style */
-const url = 'https://opentdb.com/api.php?amount=1';
+const url = 'https://opentdb.com/api.php?amount=1&category=22';
 
 const question = document.querySelector('.question');
 const answerBtn = document.querySelector('.answerBtn');

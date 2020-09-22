@@ -1,0 +1,20 @@
+/* DARK MODE */
+/* 
+based off https://dev.to/ekaterina_vu/dark-mode-with-one-line-of-code-4lkm
+and https://www.youtube.com/watch?v=qimopjP6YoM
+*/
+
+body {
+  background: white;
+}
+
+.dark-mode {
+  filter: invert(1) hue-rotate(180deg)
+}
+
+.header {
+  margin: 5rem auto 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
