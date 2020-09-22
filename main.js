@@ -29,4 +29,4 @@ trivia.then((data) => {
   question.innerHTML = data.results[0].question;
 });
 
-answerBtn.addEventListener('click', showAnswer(trivia));
+answerBtn.addEventListener('click', () => showAnswer(trivia));
