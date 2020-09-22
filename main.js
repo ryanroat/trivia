@@ -4,6 +4,7 @@ const url = 'https://opentdb.com/api.php?amount=1';
 const question = document.querySelector('.question');
 const answerBtn = document.querySelector('.answerBtn');
 const answer = document.querySelector('.answer');
+const nextBtn = document.querySelector('.nextBtn');
 
 // fetch(url)
 //     .then(response => response.json())
@@ -17,16 +18,23 @@ async function getTrivia() {
 
 function showAnswer(trivia) {
   trivia.then((data) => {
-    console.log(data);
     answer.innerHTML = data.results[0].correct_answer;
   });
 }
 
-const trivia = getTrivia();
-// const trivia = async () => await getTrivia();
-trivia.then((data) => {
-  // console.log(data);
-  question.innerHTML = data.results[0].question;
+function showQuestion(trivia) {
+  trivia.then((data) => {
+    question.innerHTML = data.results[0].question;
+  });
+}
+
+let trivia = getTrivia();
+showQuestion(trivia);
+
+nextBtn.addEventListener('click', () => {
+  answer.innerHTML = '';
+  trivia = getTrivia();
+  showQuestion(trivia);
 });
 
 answerBtn.addEventListener('click', () => showAnswer(trivia));
