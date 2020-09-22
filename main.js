@@ -24,7 +24,18 @@ function showAnswer(trivia) {
 
 function showQuestion(trivia) {
   trivia.then((data) => {
-    question.innerHTML = data.results[0].question;
+    const query = data.results[0];
+    console.log(query);
+    const queryType = query.type;
+    question.innerHTML = query.question;
+    if (queryType == 'multiple') {
+      let answArr = [];
+      answArr = answArr.concat(query.correct_answer);
+      query.incorrect_answers.forEach((answer) => {
+        answArr = answArr.concat(answer);
+      });
+      console.log(answArr);
+    }
   });
 }
 
