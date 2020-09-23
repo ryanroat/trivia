@@ -27,23 +27,34 @@ function showQuestion(trivia) {
   option.innerHTML = '';
   trivia.then((data) => {
     const query = data.results[0]; // trivia object
-    console.log(query);
+    // console.log(query);
     const queryType = query.type; // trivia type - true/false or multiple choice
     question.innerHTML = query.question; // display trivia question in DOM
-    if (queryType == 'multiple') { // handle multiple choice
+    if (queryType === 'multiple') { // handle multiple choice
       let answArr = []; // new array for all possible answers
       answArr = answArr.concat(query.correct_answer); // add correct answer to array
-      query.incorrect_answers.forEach((answer) => { // add all incorrect answers to array
-        answArr = answArr.concat(answer);
+      query.incorrect_answers.forEach((incAnswer) => { // add all incorrect answers to array
+        answArr = answArr.concat(incAnswer);
       });
-      console.log(answArr);
+      // console.log(answArr);
+
+      // randomize array with Fisher Yates/Knuth shuffle
+
+      for (let i = answArr.length - 1; i > 0; i--) {
+        const randIndex = Math.floor(Math.random() * i);
+        const swapItem = answArr[i];
+        answArr[i] = answArr[randIndex];
+        answArr[randIndex] = swapItem;
+      }
+      // console.log(answArr);
+
       // insert DOM elements for choices
 
-      answArr.forEach((answer) => {
+      answArr.forEach((choice) => {
         // create new li & br elements
         const li = document.createElement('li');
         const br = document.createElement('br');
-        li.innerHTML = ` - ${answer}`;
+        li.innerHTML = ` - ${choice}`;
         option.appendChild(li);
         option.appendChild(br);
       });
