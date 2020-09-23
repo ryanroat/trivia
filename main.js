@@ -24,6 +24,7 @@ function showAnswer(trivia) {
 
 function showQuestion(trivia) {
   const option = document.querySelector('.option');
+  option.innerHTML = '';
   trivia.then((data) => {
     const query = data.results[0]; // trivia object
     console.log(query);
@@ -42,7 +43,7 @@ function showQuestion(trivia) {
         // create new li & br elements
         const li = document.createElement('li');
         const br = document.createElement('br');
-        li.innerHTML = answer;
+        li.innerHTML = ` - ${answer}`;
         option.appendChild(li);
         option.appendChild(br);
       });
