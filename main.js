@@ -1,4 +1,5 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable no-plusplus */
 const url = 'https://opentdb.com/api.php?amount=1&category=22';
 
 const question = document.querySelector('.question');
@@ -26,17 +27,16 @@ function showQuestion(trivia) {
   const option = document.querySelector('.option');
   option.innerHTML = '';
   trivia.then((data) => {
+    console.log(data);
     const query = data.results[0]; // trivia object
-    // console.log(query);
     const queryType = query.type; // trivia type - true/false or multiple choice
-    question.innerHTML = query.question; // display trivia question in DOM
     if (queryType === 'multiple') { // handle multiple choice
+      question.innerHTML = query.question; // display trivia question in DOM
       let answArr = []; // new array for all possible answers
       answArr = answArr.concat(query.correct_answer); // add correct answer to array
       query.incorrect_answers.forEach((incAnswer) => { // add all incorrect answers to array
         answArr = answArr.concat(incAnswer);
       });
-      // console.log(answArr);
 
       // randomize array with Fisher Yates/Knuth shuffle
 
@@ -58,6 +58,11 @@ function showQuestion(trivia) {
         option.appendChild(li);
         option.appendChild(br);
       });
+    } else if (queryType === 'boolean') {
+      question.innerHTML = `True or False: ${query.question}`; // display trivia question in DOM
+
+      let answArr = []; // new array for all possible answers
+      answArr = answArr.concat(query.correct_answer); // add correct answer to array
     }
   });
 }
@@ -66,6 +71,7 @@ let trivia = getTrivia();
 showQuestion(trivia);
 
 nextBtn.addEventListener('click', () => {
+  question.innerHTML = '';
   answer.innerHTML = '';
   trivia = getTrivia();
   showQuestion(trivia);
