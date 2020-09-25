@@ -1,11 +1,21 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable no-plusplus */
-const url = 'https://opentdb.com/api.php?amount=1&category=22';
+const requestSessionToken = 'https://opentdb.com/api_token.php?command=request';
+const url = 'https://opentdb.com/api.php?amount=1';
+// const url = 'https://opentdb.com/api.php?amount=1&category=22'; // geography
 
 const question = document.querySelector('.question');
 const answerBtn = document.querySelector('.answerBtn');
 const answer = document.querySelector('.answer');
 const nextBtn = document.querySelector('.nextBtn');
+
+async function createRequestURL() {
+  const response = await fetch(requestSessionToken);
+  const tokenObj = await response.json();
+  const { token } = tokenObj;
+  console.log(token);
+  // return apiURL;
+}
 
 // fetch(url)
 //     .then(response => response.json())
@@ -27,6 +37,7 @@ function showQuestion(trivia) {
   const option = document.querySelector('.option');
   option.innerHTML = '';
   trivia.then((data) => {
+    // console.clear();
     console.log(data);
     const query = data.results[0]; // trivia object
     const queryType = query.type; // trivia type - true/false or multiple choice
@@ -67,6 +78,8 @@ function showQuestion(trivia) {
   });
 }
 
+const apiRequest = createRequestURL();
+// console.log(apiRequest);
 let trivia = getTrivia();
 showQuestion(trivia);
 
