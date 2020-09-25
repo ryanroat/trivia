@@ -13,7 +13,8 @@ async function createRequestURL() {
   const response = await fetch(requestSessionToken);
   const tokenObj = await response.json();
   const { token } = tokenObj;
-  console.log(token);
+  const requestURL = `${url}&token=${token}`;
+  console.log(requestURL);
   // return apiURL;
 }
 

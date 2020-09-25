@@ -1,1 +1,6 @@
+GET https://opentdb.com/api_category.php
+
+
 https://opentdb.com/api_token.php?command=request
+
+
