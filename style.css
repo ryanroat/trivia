@@ -20,7 +20,11 @@ body {
   justify-content: space-around;
 }
 
+div.categories button {
+  font-size: .65rem;
+  font-weight: 800;
+}
+
 li {
   display: inline;
-}
 }
