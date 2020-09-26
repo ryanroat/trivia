@@ -1,6 +1,7 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable no-plusplus */
 const requestSessionToken = 'https://opentdb.com/api_token.php?command=request';
+const catUrl = 'https://opentdb.com/api_category.php';
 const url = 'https://opentdb.com/api.php?amount=1';
 // const url = 'https://opentdb.com/api.php?amount=1&category=22'; // geography
 
@@ -8,11 +9,13 @@ const question = document.querySelector('.question');
 const answerBtn = document.querySelector('.answerBtn');
 const answer = document.querySelector('.answer');
 const nextBtn = document.querySelector('.nextBtn');
+let apiRequest;
+const categories = [];
 
 async function createRequestURL() {
+  // TODO: move local storage I/O to separate function
   let token;
   const storedToken = window.localStorage.getItem('trivia_token');
-  console.log(storedToken);
   if (!storedToken) {
     const response = await fetch(requestSessionToken);
     const tokenObj = await response.json();
@@ -22,7 +25,6 @@ async function createRequestURL() {
     token = storedToken;
   }
   const requestURL = `${url}&token=${token}`;
-  console.log(requestURL);
   // return apiURL;
 }
 
@@ -30,10 +32,26 @@ async function createRequestURL() {
 //     .then(response => response.json())
 //     .then(data => console.log(data));
 
+async function getCategories() {
+  let catArr = [];
+  const response = await fetch(catUrl);
+  const data = await response.json();
+  catArr = data.trivia_categories;
+  return catArr;
+}
+
 async function getTrivia() {
   const response = await fetch(url);
   const data = await response.json();
-  return data;
+  if (data.response_code === 3) {
+    // request new session token here
+    window.localStorage.removeItem('trivia_token');
+    apiRequest = createRequestURL();
+    return getTrivia();
+  }
+  if (data.response_code === 0) {
+    return data;
+  }
 }
 
 function showAnswer(trivia) {
@@ -46,8 +64,6 @@ function showQuestion(trivia) {
   const option = document.querySelector('.option');
   option.innerHTML = '';
   trivia.then((data) => {
-    // console.clear();
-    console.log(data);
     const query = data.results[0]; // trivia object
     const queryType = query.type; // trivia type - true/false or multiple choice
     if (queryType === 'multiple') { // handle multiple choice
@@ -66,7 +82,6 @@ function showQuestion(trivia) {
         answArr[i] = answArr[randIndex];
         answArr[randIndex] = swapItem;
       }
-      // console.log(answArr);
 
       // insert DOM elements for choices
 
@@ -87,8 +102,8 @@ function showQuestion(trivia) {
   });
 }
 
-const apiRequest = createRequestURL();
-// console.log(apiRequest);
+const catObj = getCategories();
+apiRequest = createRequestURL();
 let trivia = getTrivia();
 showQuestion(trivia);
 
