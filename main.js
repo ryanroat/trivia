@@ -5,12 +5,12 @@ const catUrl = 'https://opentdb.com/api_category.php';
 const url = 'https://opentdb.com/api.php?amount=1';
 // const url = 'https://opentdb.com/api.php?amount=1&category=22'; // geography
 
-const categories = document.querySelector('.categories');
 const question = document.querySelector('.question');
 const answerBtn = document.querySelector('.answerBtn');
 const answer = document.querySelector('.answer');
 const nextBtn = document.querySelector('.nextBtn');
 let apiRequest;
+const categories = [];
 
 async function createRequestURL() {
   // TODO: move local storage I/O to separate function
@@ -38,22 +38,6 @@ async function getCategories() {
   const data = await response.json();
   catArr = data.trivia_categories;
   return catArr;
-}
-
-function chooseCategory() {
-  // categories.innerHTML = 'display categories here';
-  const catHTML = '';
-  const catObj = getCategories();
-  catObj.then((categoriesArray) => {
-    categoriesArray.forEach((catItem) => {
-      console.log(catItem);
-      const btn = document.createElement('button');
-      btn.setAttribute('name', catItem.name);
-      btn.setAttribute('value', catItem.id);
-      btn.innerHTML = `${catItem.name}`;
-      categories.appendChild(btn);
-    });
-  });
 }
 
 async function getTrivia() {
@@ -118,7 +102,7 @@ function showQuestion(trivia) {
   });
 }
 
-chooseCategory();
+const catObj = getCategories();
 apiRequest = createRequestURL();
 let trivia = getTrivia();
 showQuestion(trivia);
