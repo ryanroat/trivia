@@ -10,9 +10,17 @@ const answer = document.querySelector('.answer');
 const nextBtn = document.querySelector('.nextBtn');
 
 async function createRequestURL() {
-  const response = await fetch(requestSessionToken);
-  const tokenObj = await response.json();
-  const { token } = tokenObj;
+  let token;
+  const storedToken = window.localStorage.getItem('trivia_token');
+  console.log(storedToken);
+  if (!storedToken) {
+    const response = await fetch(requestSessionToken);
+    const tokenObj = await response.json();
+    token = tokenObj.token;
+    window.localStorage.setItem('trivia_token', token);
+  } else {
+    token = storedToken;
+  }
   const requestURL = `${url}&token=${token}`;
   console.log(requestURL);
   // return apiURL;
