@@ -15,20 +15,25 @@
           <button id="darkmode">DarkMode</button>
         </section>
       </header>
-      <main>
-        <div class="categories"></div>
-        <div class="question"></div>
-        <div class="options">
-          <ul class="option">
-            <!-- insert DOM elements here -->
-          </ul>
-        </div>
-        <button type="button" class="answerBtn">ANSWER</button>
-        <div class="answer"></div>
-        <button type="button" class="nextBtn">NEXT</button>
-        <script src="./darkmode.js"></script>
-        <script src="./main.js"></script>
-      </main>
+      <section class="main-body">
+        <main>
+          <div class="question"></div>
+          <div class="options">
+            <ul class="option">
+              <!-- insert DOM elements here -->
+            </ul>
+          </div>
+          <button type="button" class="answerBtn">ANSWER</button>
+          <div class="answer"></div>
+          <button type="button" class="nextBtn">NEXT</button>
+        </main>
+        <aside class="category">
+          <div class="categories"></div>
+        </aside>
+      </section>
+      <!-- /section main-body -->
     </div>
+    <script src="./darkmode.js"></script>
+    <script src="./main.js"></script>
   </body>
 </html>
